@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "MyHours",
+  "version": "1.0.0",
+  "description": "MyHours webapp running as a Chrome Side Panel.",
+  "permissions": [
+    "declarativeNetRequest",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "https://app.myhours.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Open MyHours"
+  },
+  "side_panel": {
+    "default_path": "app.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://app.myhours.com/*"],
+      "js": ["content.js"],
+      "all_frames": true,
+      "run_at": "document_idle"
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}
