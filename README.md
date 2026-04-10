@@ -18,6 +18,7 @@ To update after pulling new changes, go back to `chrome://extensions` and click 
 ## Usage
 
 Click the MyHours icon in the Chrome toolbar to open or close the Side Panel. The panel stays visible as you navigate between tabs and browser windows.
+**IMPORTANT**: login is not possible inside the Side Panel. You need to login in web app before opening Side Panel (same session).
 
 ## What it contains
 
