@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "MyHours",
+  "name": "My Hours",
   "version": "1.0.0",
-  "description": "MyHours webapp running as a Chrome Side Panel.",
+  "description": "My Hours webapp running as a Chrome Side Panel.",
   "permissions": [
     "declarativeNetRequest",
     "sidePanel"
@@ -14,8 +14,14 @@
   "background": {
     "service_worker": "background.js"
   },
+  "icons": {
+    "16": "MyHoursIcon.png",
+    "48": "MyHoursIcon.png",
+    "128": "MyHoursIcon.png"
+  },
   "action": {
-    "default_title": "Open MyHours"
+    "default_title": "Open My Hours",
+    "default_icon": "MyHoursIcon.png"
   },
   "side_panel": {
     "default_path": "app.html"
