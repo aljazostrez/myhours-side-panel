@@ -13,5 +13,20 @@
       "urlFilter": "https://app.myhours.com/*",
       "resourceTypes": ["main_frame", "sub_frame"]
     }
+  },
+  {
+    "id": 2,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "responseHeaders": [
+        { "header": "X-Frame-Options",         "operation": "remove" },
+        { "header": "Content-Security-Policy",  "operation": "remove" }
+      ]
+    },
+    "condition": {
+      "urlFilter": "https://login.myhours.com/*",
+      "resourceTypes": ["sub_frame"]
+    }
   }
 ]

@@ -1,8 +1,14 @@
-{
+﻿{
   "manifest_version": 3,
   "name": "My Hours",
   "version": "1.0.0",
-  "description": "My Hours webapp running as a Chrome Side Panel.",
+  "description": "My Hours webapp running as a browser Side Panel.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "myhours-side-panel@extension",
+      "strict_min_version": "128.0"
+    }
+  },
   "permissions": [
     "declarativeNetRequest",
     "sidePanel"
@@ -12,7 +18,8 @@
     "https://login.myhours.com/*"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
   },
   "icons": {
     "16": "MyHoursIcon.png",
@@ -25,6 +32,11 @@
   },
   "side_panel": {
     "default_path": "app.html"
+  },
+  "sidebar_action": {
+    "default_title": "My Hours",
+    "default_panel": "app.html",
+    "default_icon": "MyHoursIcon.png"
   },
   "content_scripts": [
     {
