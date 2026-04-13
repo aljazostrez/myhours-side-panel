@@ -13,5 +13,19 @@
       "urlFilter": "https://app.myhours.com/*",
       "resourceTypes": ["main_frame", "sub_frame"]
     }
+  },
+  {
+    "id": 2,
+    "priority": 2,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "url": "data:text/html,<!DOCTYPE html><html lang=en><head><meta charset=UTF-8><title>Login required</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;background:%23f5f6fa;color:%23333;height:100vh;display:flex;align-items:center;justify-content:center}.card{text-align:center;padding:24px}.card h2{font-size:.85rem;font-weight:600;color:%23888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}.card p{font-size:.9rem;line-height:1.6;margin-bottom:18px}.card a{color:%230066cc}.card button{padding:8px 28px;background:%230066cc;color:%23fff;border:none;border-radius:6px;font-size:.85rem;cursor:pointer}.card button:hover{background:%230052a3}</style></head><body><div class=card><h2>Login required</h2><p><a href='https://app.myhours.com/' target=_blank>Log in to MyHours</a> in a new tab, then come back and refresh.</p><button onclick='window.location.href=\"https://app.myhours.com/\"'>Refresh</button></div></body></html>"
+      }
+    },
+    "condition": {
+      "urlFilter": "||login.myhours.com",
+      "resourceTypes": ["sub_frame"]
+    }
   }
 ]

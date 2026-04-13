@@ -8,7 +8,8 @@
     "sidePanel"
   ],
   "host_permissions": [
-    "https://app.myhours.com/*"
+    "https://app.myhours.com/*",
+    "https://login.myhours.com/*"
   ],
   "background": {
     "service_worker": "background.js"
