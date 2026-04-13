@@ -362,40 +362,47 @@ function restructureLogFormFooter() {
   outer._logFormFooterDone = true;
 }
 
+// ── Auto-click sign-out on /profile if flagged ───────────────────────────────
+if (window.location.pathname === '/profile' && sessionStorage.getItem('mh-ext-pending-signout') === '1') {
+  sessionStorage.removeItem('mh-ext-pending-signout');
+  let attempts = 0;
+  const poll = setInterval(() => {
+    attempts++;
+    if (attempts > 60) { clearInterval(poll); return; }
+    const signOutBtn =
+      document.querySelector('mh-button#profileSignOutBtn button') ||
+      document.querySelector('#profileSignOutBtn button') ||
+      document.querySelector('#profileSignOutBtn');
+    if (signOutBtn) {
+      clearInterval(poll);
+      signOutBtn.click();
+    }
+  }, 50);
+}
+
 function injectSignOutButton() {
   if (document.getElementById('mh-ext-signout')) return;
-  const btn = document.createElement('a');
+
+  const btn = document.createElement('button');
   btn.id = 'mh-ext-signout';
-  btn.href = '/sign-out';
+  btn.type = 'button';
   btn.title = 'Sign out';
   btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`;
   btn.style.cssText = `
-    position: fixed;
-    bottom: 16px;
-    left: 16px;
-    z-index: 9999;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: #fff;
-    border: 1px solid #ddd;
+    position: fixed; bottom: 16px; left: 16px; z-index: 2147483647;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: #fff; border: 1px solid #ddd;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #666;
-    text-decoration: none;
-    cursor: pointer;
-    transition: box-shadow 0.2s, color 0.2s;
+    display: flex; align-items: center; justify-content: center;
+    color: #666; cursor: pointer; padding: 0;
   `;
-  btn.addEventListener('mouseenter', () => {
-    btn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-    btn.style.color = '#333';
+  btn.addEventListener('mouseenter', () => { btn.style.boxShadow = '0 4px 12px rgba(0,0,0,0.25)'; btn.style.color = '#e53e3e'; });
+  btn.addEventListener('mouseleave', () => { btn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)'; btn.style.color = '#666'; });
+  btn.addEventListener('click', () => {
+    sessionStorage.setItem('mh-ext-pending-signout', '1');
+    window.location.href = '/profile';
   });
-  btn.addEventListener('mouseleave', () => {
-    btn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
-    btn.style.color = '#666';
-  });
+
   document.body.appendChild(btn);
 }
 
@@ -412,6 +419,13 @@ function run() {
   restructureLogFormFooter();
   applyToolbarHover();
   injectSignOutButton();
+
+  // Hide sign-out button while the app loading screen is visible
+  const btn = document.getElementById('mh-ext-signout');
+  if (btn) {
+    const isLoading = !!document.querySelector('mh-root img[src*="loader-dark.svg"]');
+    btn.style.display = isLoading ? 'none' : 'flex';
+  }
 }
 
 // Run once DOM is ready
